@@ -8,7 +8,7 @@
  *
  * Plugin Name: BP Rest Extended
  * Description: Extended functionality for BuddyPress JSON rest api.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: modemlooper, AppPresser
  * Plugin URI: https://github.com/AppPresser-Apps/bp-rest-extended
  * Author URI: https://github.com/apppresser
@@ -18,7 +18,7 @@
  * Domain Path: languages
  */
 
-define( 'BPRE_VERSION', '1.0.3' );
+define( 'BPRE_VERSION', '1.0.4' );
 define( 'BPRE_API_VERSION', '1' );
 define( 'BPRE_PLUGIN_NAME', 'BPRE' );
 define( 'BPRE_DIR', plugin_dir_path( __FILE__ ) );
