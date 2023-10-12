@@ -41,8 +41,8 @@ function appp_filter_groups_user_data( $response, $request, $group ) {
 	$response->data['route'] = $url_parts['path'];
 	$response->data['api']   = $url_parts['scheme'] . '://' . $url_parts['host'];
 
-	$response->data['group_meta']    = groups_get_groupmeta( $group->id );
-	$response->data['member_count']  = (int) groups_get_total_member_count( $group->id );
+	$response->data['group_meta']   = groups_get_groupmeta( $group->id );
+	$response->data['member_count'] = (int) groups_get_total_member_count( $group->id );
 
 	// Filter out privte data.
 	$keys = array( 'id', 'display_name', 'fullname', 'avatar_url' );
@@ -52,7 +52,7 @@ function appp_filter_groups_user_data( $response, $request, $group ) {
 	 */
 	$group_members = groups_get_group_members(
 		array(
-			'group_id'   => $group->id,
+			'group_id' => $group->id,
 		)
 	)['members'];
 
@@ -67,7 +67,9 @@ function appp_filter_groups_user_data( $response, $request, $group ) {
 					'html'    => false,
 				)
 			);
-			return array_intersect_key( $member_array, array_flip( $keys ) );
+			$admin_array                = array_intersect_key( $member_array, array_flip( $keys ) );
+
+			return apply_filters( 'appp_rest_group_member_prepare_value', $member_array );
 		},
 		$group_members
 	);
@@ -95,7 +97,9 @@ function appp_filter_groups_user_data( $response, $request, $group ) {
 					'html'    => false,
 				)
 			);
-			return array_intersect_key( $mods_array, array_flip( $keys ) );
+			$admin_array              = array_intersect_key( $mods_array, array_flip( $keys ) );
+
+			return apply_filters( 'appp_rest_group_mod_prepare_value', $mods_array );
 		},
 		$group_mods
 	);
@@ -123,7 +127,10 @@ function appp_filter_groups_user_data( $response, $request, $group ) {
 					'html'    => false,
 				)
 			);
-			return array_intersect_key( $admin_array, array_flip( $keys ) );
+
+			$admin_array = array_intersect_key( $admin_array, array_flip( $keys ) );
+
+			return apply_filters( 'appp_rest_group_admin_prepare_value', $admin_array );
 		},
 		$group_admins
 	);
@@ -145,7 +152,7 @@ function appp_filter_groups_user_data( $response, $request, $group ) {
 
 	return apply_filters( 'appp_rest_groups_prepare_value', $response, $group, $user );
 }
-add_filter( 'bp_rest_groups_prepare_value', 'appp_filter_groups_user_data', 999, 3 );
+add_filter( 'bp_rest_groups_prepare_value', 'appp_filter_groups_user_data', 10, 3 );
 
 /**
  * Add extra request params to members endpoint.
@@ -193,6 +200,7 @@ function appp_save_group_meta( $group, $response, $request ) {
 	}
 
 	foreach ( $params['meta'] as $key => $value ) {
+		$value = apply_filters( 'appp_rest_group_meta_value', $value, $key );
 		groups_update_groupmeta( $group->id, $key, $value );
 	}
 }

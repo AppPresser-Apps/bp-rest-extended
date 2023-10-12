@@ -247,6 +247,16 @@ function appp_add_data_to_members_api_items( $response, $request, $member ) {
 	$response->data['route'] = $url_parts['path'];
 	$response->data['api']   = $url_parts['scheme'] . '://' . $url_parts['host'];
 
+	$avatar = bp_core_fetch_avatar(
+		array(
+			'item_id' => $member->ID,
+			'type'    => 'full',
+			'html'    => false,
+		)
+	);
+
+	$response->data['avatar_url'] = $avatar;
+
 	return apply_filters( 'appp_rest_members_prepare_value', $response, $member );
 
 }
