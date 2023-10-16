@@ -1,12 +1,17 @@
 <?php
+/**
+ * BP Rest Extended
+ *
+ * @package BP_Rest_Extended
+ * @since 1.0.0
+ */
 
-// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Main BP_Rest_Extended Class.
  *
- * Tap tap tap... Is this thing on? 
+ * Tap tap tap... Is this thing on?
  *
  * @since 1.0.0
  */
@@ -69,11 +74,11 @@ class BP_Rest_Extended {
 		require_once BPRE_DIR . 'includes/members/endpoints.php';
 		require_once BPRE_DIR . 'includes/members/functions.php';
 
+		require_once BPRE_DIR . 'includes/groups/endpoints.php';
 		require_once BPRE_DIR . 'includes/groups/filters.php';
 
 		require_once BPRE_DIR . 'includes/activity/endpoints.php';
 		require_once BPRE_DIR . 'includes/activity/functions.php';
-
 	}
 
 }

@@ -203,8 +203,10 @@ function appp_save_group_meta( $group, $response, $request ) {
 		$value = apply_filters( 'appp_rest_group_meta_value', $value, $key );
 		groups_update_groupmeta( $group->id, $key, $value );
 	}
+
 }
-add_action( 'bp_rest_groups_create_item', 'appp_save_group_meta', 10, 3 );
+add_action( 'bp_rest_groups_create_item', 'appp_save_group_meta', 5, 3 );
+
 
 
 /**
