@@ -206,6 +206,7 @@ function appp_save_group_meta( $group, $response, $request ) {
 
 }
 add_action( 'bp_rest_groups_create_item', 'appp_save_group_meta', 5, 3 );
+add_action( 'bp_rest_groups_update_item', 'appp_save_group_meta', 5, 3 );
 
 
 
