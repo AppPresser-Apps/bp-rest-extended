@@ -26,7 +26,6 @@ function appp_add_extra_param_to_member_endpoint( $params ) {
 	);
 
 	return $params;
-
 }
 add_filter( 'bp_rest_members_collection_params', 'appp_add_extra_param_to_member_endpoint' );
 
@@ -51,7 +50,6 @@ function appp_set_user_ids_param_from_username( $args, $request ) {
 	}
 
 	return $args;
-
 }
 add_filter( 'bp_rest_members_get_items_query_args', 'appp_set_user_ids_param_from_username', 10, 2 );
 
@@ -256,9 +254,9 @@ function appp_add_data_to_members_api_items( $response, $request, $member ) {
 	);
 
 	$response->data['avatar_url'] = $avatar;
+	$reponse->data['attachments'] = appp_get_member_attachments( $member->ID );
 
 	return apply_filters( 'appp_rest_members_prepare_value', $response, $member );
-
 }
 add_action( 'bp_rest_members_prepare_value', 'appp_add_data_to_members_api_items', 10, 3 );
 
@@ -284,15 +282,15 @@ function appp_save_signup_meta_during_registration( $meta, $request ) {
 add_filter( 'bp_rest_signup_create_item_meta', 'appp_save_signup_meta_during_registration', 10, 2 );
 
 
- /**
-  * Add Member Types Pro field otions to api response data.
-  * This custom xprofile field plugin isnt returning options correctly so gotta filter it in
-  *
-  * @param [type] $field_groups
-  * @param [type] $response
-  * @param [type] $request
-  * @return Object
-  */
+/**
+ * Add Member Types Pro field otions to api response data.
+ * This custom xprofile field plugin isnt returning options correctly so gotta filter it in
+ *
+ * @param [type] $field_groups
+ * @param [type] $response
+ * @param [type] $request
+ * @return Object
+ */
 function appp_add_membertypes_to_fields_api_response( $field_groups, $response, $request ) {
 
 	foreach ( $response->data as $key => $field ) {

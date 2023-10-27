@@ -65,10 +65,15 @@ function appp_get_members_attachments( $request ) {
 		);
 	}
 
+	return appp_get_member_attachment( $params['user_id'] );
+}
+
+function appp_get_member_attachment( $user_id ) {
+
 	$upload_dir = wp_upload_dir();
 
-	$dir = $upload_dir['basedir'] . '/attachments/member/' . $params['user_id'];
-	$url = $upload_dir['baseurl'] . '/attachments/member/' . $params['user_id'];
+	$dir = $upload_dir['basedir'] . '/attachments/member/' . $user_id;
+	$url = $upload_dir['baseurl'] . '/attachments/member/' . $user_id;
 
 	$files = array();
 
