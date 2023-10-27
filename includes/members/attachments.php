@@ -99,6 +99,8 @@ function appp_delete_members_attachment( $request ) {
 
 	$params = $request->get_params();
 
+	error_log( print_r( $params, true ) );
+
 	if ( empty( $params ) ) {
 		return rest_ensure_response(
 			new \WP_Error(
@@ -121,7 +123,9 @@ function appp_delete_members_attachment( $request ) {
 
 	$upload_dir = wp_upload_dir();
 
-	$path = $upload_dir['basedir'] . '/attachments/member/' . $user_id . '/' . $params['file'];
+	$path = $upload_dir['basedir'] . '/attachments/member/' . $user_id . '/' . basename( $params['file'] );
+
+	error_log( print_r( $path, true ) );
 
 	if ( file_exists( $path ) ) {
 		wp_delete_file( $path );
