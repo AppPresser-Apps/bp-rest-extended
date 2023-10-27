@@ -2,6 +2,8 @@
 
 function appp_upload_member_attachment( $files ) {
 
+	error_log( print_r( $files, true ) );
+
 	if ( ! function_exists( 'wp_handle_upload' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/file.php';
 	}
@@ -12,16 +14,16 @@ function appp_upload_member_attachment( $files ) {
 	add_filter( 'upload_dir', 'appp_member_attachment_upload_dir' );
 
 	// Do our thing. WordPress will move the file to 'uploads/attachments'.
-	foreach ( $files['name'] as $key => $value ) {
+	foreach ( $files as $key => $value ) {
 
-		if ( $files['name'][ $key ] ) {
+		if ( $files[ $key ] ) {
 
 			$uploadedfile = array(
-				'name'     => $files['name'][ $key ],
-				'type'     => $files['type'][ $key ],
-				'tmp_name' => $files['tmp_name'][ $key ],
-				'error'    => $files['error'][ $key ],
-				'size'     => $files['size'][ $key ],
+				'name'     => $value['name'],
+				'type'     => $value['type'],
+				'tmp_name' => $value['tmp_name'],
+				'error'    => $value['error'],
+				'size'     => $value['size'],
 			);
 
 			$movefile = wp_handle_upload( $uploadedfile, $overrides );
@@ -143,7 +145,7 @@ function appp_upload_member_attachments( $request ) {
 	$files = $request->get_file_params();
 
 	if ( isset( $files['files'] ) ) {
-		appp_upload_member_attachment( $files['files'] );
+		appp_upload_member_attachment( array( $files['files'] ) );
 		return 'uploaded';
 	}
 
