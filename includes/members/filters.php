@@ -254,7 +254,7 @@ function appp_add_data_to_members_api_items( $response, $request, $member ) {
 	);
 
 	$response->data['avatar_url'] = $avatar;
-	$reponse->data['attachments'] = appp_get_member_attachments( $member->ID );
+	$reponse->data['attachments'] = appp_get_member_attachment( $member->ID );
 
 	return apply_filters( 'appp_rest_members_prepare_value', $response, $member );
 }

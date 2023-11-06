@@ -49,6 +49,32 @@ function appp_filter_activities( $args ) {
 add_filter( 'bp_after_has_activities_parse_args', 'appp_filter_activities', 99 );
 add_filter( 'bp_rest_activity_get_items_query_args', 'appp_filter_activities', 99 );
 
+/**
+ * Filter groups, remove blocked/blocking.
+ *
+ * @param [type] $paged_groups_sql
+ * @param [type] $sql
+ * @param [type] $r
+ * @return void
+ */
+function appp_filter_groups_sql( $paged_groups_sql, $sql, $r ) {
+
+	// Create a new list.
+	$list = array();
+	// First, add everyone we are blocking to $list.
+	$list = array_merge( $list, get_blocked_users( bp_loggedin_user_id() ) );
+	// Next, add everyone blocking us to $list.
+	$list = array_merge( $list, get_blocked_by_users( bp_loggedin_user_id() ) );
+
+	if ( empty( $list ) ) {
+		return $paged_groups_sql;
+	}
+
+	$sql = $sql['select'] . ' FROM ' . $sql['from'] . ' WHERE ' . $sql['where'] . ' AND g.creator_id NOT IN ( ' . implode( ',', $list ) . ' ) ' . $sql['orderby'] . ' ' . $sql['pagination'];
+
+	return $sql;
+}
+add_filter( 'bp_groups_get_paged_groups_sql', 'appp_filter_groups_sql', 99, 3 );
 
 
 /**
@@ -310,21 +336,17 @@ function appp_check_recipients( $recipients ) {
 
 			if ( bp_core_get_core_userdata( (int) $recipient ) ) {
 				$recipient_id = (int) $recipient;
-			} else {
+			} elseif ( bp_is_username_compatibility_mode() ) {
 
-				if ( bp_is_username_compatibility_mode() ) {
 					$recipient_id = bp_core_get_userid( (int) $recipient );
-				} else {
-					$recipient_id = bp_core_get_userid_from_nicename( (int) $recipient );
-				}
-			}
-		} else {
-
-			if ( bp_is_username_compatibility_mode() ) {
-				$recipient_id = bp_core_get_userid( $recipient );
 			} else {
-				$recipient_id = bp_core_get_userid_from_nicename( $recipient );
+				$recipient_id = bp_core_get_userid_from_nicename( (int) $recipient );
 			}
+		} elseif ( bp_is_username_compatibility_mode() ) {
+
+				$recipient_id = bp_core_get_userid( $recipient );
+		} else {
+			$recipient_id = bp_core_get_userid_from_nicename( $recipient );
 		}
 
 		// Make sure we are not trying to send a message to someone we are blocking.
