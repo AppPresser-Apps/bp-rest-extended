@@ -10,6 +10,10 @@ defined( 'ABSPATH' ) || exit;
 
 function appp_toggle_blocking( $action, $blocker, $blocked ) {
 
+	if ( (int) $blocker === (int) $blocked ) {
+		return __( 'You can not block yourself.', 'bpre' );
+	}
+
 	$response = 'failed';
 
 	switch ( $action ) {
@@ -32,8 +36,9 @@ function appp_toggle_blocking( $action, $blocker, $blocked ) {
 					}
 				}
 
-				do_action( 'appp_user_unblocked', (int) $blocked, $blocker );
-				$response = __( 'User successfully unblocked', 'appp-core' );
+				do_action( 'bpre_user_unblocked', (int) $blocked, $blocker );
+
+				$response = __( 'User successfully unblocked', 'bpre' );
 			} else {
 				$response = 'Not in block list?';
 			}
@@ -43,7 +48,7 @@ function appp_toggle_blocking( $action, $blocker, $blocked ) {
 			$blocked_users = get_blocked_users( (int) $blocker );
 
 			if ( user_can( (int) $blocked, 'manage_options' ) ) {
-				$response = __( 'You cannot block administrators or moderators', 'appp-core' );
+				$response = __( 'You cannot block administrators or moderators', 'bpre' );
 			} else {
 				$blocked_user    = (int) $blocked;
 				$blocked_users[] = $blocked_user;
@@ -63,8 +68,9 @@ function appp_toggle_blocking( $action, $blocker, $blocked ) {
 					update_user_meta( $blocked_user, 'appp_blocked_by', $list );
 				}
 
-				do_action( 'bptk_user_blocked', (int) $blocked, (int) $blocker );
-				$response = __( 'User successfully blocked.', 'appp-core' );
+				do_action( 'bpre_user_blocked', (int) $blocked, (int) $blocker );
+
+				$response = __( 'User successfully blocked.', 'bpre' );
 			}
 
 			break;

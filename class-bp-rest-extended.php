@@ -83,6 +83,9 @@ class BP_Rest_Extended {
 		require_once BPRE_DIR . 'includes/groups/endpoints.php';
 		require_once BPRE_DIR . 'includes/groups/filters.php';
 
+		require_once BPRE_DIR . 'includes/messages/attachments.php';
+		require_once BPRE_DIR . 'includes/messages/filters.php';
+
 		require_once BPRE_DIR . 'includes/activity/endpoints.php';
 		require_once BPRE_DIR . 'includes/activity/functions.php';
 	}
