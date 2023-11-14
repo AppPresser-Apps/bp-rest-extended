@@ -400,7 +400,7 @@ function appp_check_conversations( $message ) {
 
 if ( bp_is_active( 'messages' ) ) {
 	add_filter( 'bp_messages_recipients', 'appp_check_recipients' );
-	add_action( 'messages_message_before_save', 'appp_check_conversations' );
+	//add_action( 'messages_message_before_save', 'appp_check_conversations' );
 }
 
 

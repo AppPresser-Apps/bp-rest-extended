@@ -300,28 +300,6 @@ function appp_add_membertypes_to_fields_api_response( $field_groups, $response, 
 			$member_types   = bp_get_member_types();
 			$selected_types = bp_xprofile_get_meta( $field['id'], 'field', 'bpmtp_field_selected_types', true );
 
-			// error_log(print_r($member_types,true));
-			// error_log(print_r($selected_types,true));
-
-			// error_log(print_r($field,true));
-
-			// {
-			// "id": 42,
-			// "group_id": 1,
-			// "parent_id": 10,
-			// "type": "option",
-			// "name": "Singing",
-			// "description": {
-			// "rendered": ""
-			// },
-			// "is_required": false,
-			// "can_delete": true,
-			// "field_order": 0,
-			// "option_order": 1,
-			// "order_by": "",
-			// "is_default_option": false
-			// }
-
 			$options = array();
 
 			foreach ( $selected_types as $key => $value ) {

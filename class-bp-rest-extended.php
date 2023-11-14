@@ -75,10 +75,10 @@ class BP_Rest_Extended {
 		require_once BPRE_DIR . 'includes/members/functions.php';
 		require_once BPRE_DIR . 'includes/members/attachments.php';
 
-		require_once BPRE_DIR . 'includes/members//moderation/endpoints.php';
-		require_once BPRE_DIR . 'includes/members//moderation/blocking.php';
-		require_once BPRE_DIR . 'includes/members//moderation/filters.php';
-		require_once BPRE_DIR . 'includes/members//moderation/functions.php';
+		require_once BPRE_DIR . 'includes/members/moderation/endpoints.php';
+		require_once BPRE_DIR . 'includes/members/moderation/blocking.php';
+		require_once BPRE_DIR . 'includes/members/moderation/filters.php';
+		require_once BPRE_DIR . 'includes/members/moderation/functions.php';
 
 		require_once BPRE_DIR . 'includes/groups/endpoints.php';
 		require_once BPRE_DIR . 'includes/groups/filters.php';
