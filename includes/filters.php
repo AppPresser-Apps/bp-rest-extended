@@ -9,8 +9,10 @@
  * @return array
  */
 function appp_dont_allow_admin_jwt_auth( $user ) {
-	if ( user_can( $user, 'administrator' ) ) {
+	if ( user_can( $user, 'edit_users' ) ) {
 		return;
 	}
+
+	return $user;
 }
 add_filter( 'jwt_auth_token_after_authenticate', 'appp_dont_allow_admin_jwt_auth', 10 );
