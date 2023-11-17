@@ -108,6 +108,9 @@ class Jwt_Auth_Public {
 	 * @return [type] [description]
 	 */
 	public function generate_token( $request ) {
+
+
+
 		$secret_key = defined( 'JWT_AUTH_SECRET_KEY' ) ? JWT_AUTH_SECRET_KEY : false;
 		$username   = $request->get_param( 'username' );
 		$password   = $request->get_param( 'password' );
@@ -131,6 +134,16 @@ class Jwt_Auth_Public {
 			return new WP_Error(
 				'[jwt_auth] ' . $error_code,
 				$user->get_error_message( $error_code ),
+				array(
+					'status' => 403,
+				)
+			);
+		}
+
+		if ( ! apply_filters( 'jwt_auth_token_after_authenticate', $user ) ) {
+			return new WP_Error(
+				'jwt_auth_bad_authenticate',
+				__( 'User cannot be authenticated due to capability level.', 'wp-api-jwt-auth' ),
 				array(
 					'status' => 403,
 				)

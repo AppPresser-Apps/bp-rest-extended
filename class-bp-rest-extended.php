@@ -68,6 +68,7 @@ class BP_Rest_Extended {
 
 		require_once BPRE_DIR . 'includes/functions.php';
 		require_once BPRE_DIR . 'includes/actions.php';
+		require_once BPRE_DIR . 'includes/filters.php';
 
 		require_once BPRE_DIR . 'includes/members/filters.php';
 		require_once BPRE_DIR . 'includes/members/actions.php';
