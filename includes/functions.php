@@ -37,9 +37,6 @@ function appp_upload_attachments( $component, $item_id, $files ) {
 				);
 
 				$upload = $attachment->upload( $uploadedfile );
-
-				error_log( print_r( $upload, true ) );
-
 			}
 		}
 	}

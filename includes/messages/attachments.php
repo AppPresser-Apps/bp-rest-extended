@@ -446,7 +446,6 @@ class ApppAttachment {
 
 			// Stop in case of error.
 			if ( is_wp_error( $resized ) ) {
-				error_log( print_r( $resized, true ) );
 				return $resized;
 			}
 		}

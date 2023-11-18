@@ -201,6 +201,7 @@ function appp_save_group_meta( $group, $response, $request ) {
 
 	foreach ( $params['meta'] as $key => $value ) {
 		$value = apply_filters( 'appp_rest_group_meta_value', $value, $key );
+
 		groups_update_groupmeta( $group->id, $key, $value );
 		$response->data[0]->$key = $value;
 	}
