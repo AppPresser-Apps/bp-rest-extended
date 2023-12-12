@@ -49,16 +49,18 @@ function appp_filter_message_create_data( $thread, $response, $request ) {
 	$params = $request->get_params();
 	$files  = $request->get_file_params();
 
-	if ( isset( $params['meta'] ) ) {
+	if ( isset( $params['meta'] ) && 'undefined' !== $params['meta'] ) {
 
 		$meta = is_object( json_decode( $params['meta'] ) ) ? (array) json_decode( $params['meta'] ) : $params['meta'];
 
-		foreach ( $meta as $key => $value ) {
-			bp_messages_update_meta( $response->data[0]['message_id'], $key, $value );
+		if ( isset( $meta ) ) {
+			foreach ( $meta as $key => $value ) {
+				bp_messages_update_meta( $response->data[0]['message_id'], $key, $value );
+			}
 		}
 	}
 
-	// appp_upload_attachments( 'messages', $response->data[0]['message_id'], $files );
+	appp_upload_attachments( 'messages', $response->data[0]['message_id'], $files );
 
 	return $response;
 }
@@ -70,4 +72,4 @@ function appp_filter_messages_query_args( $args, $method ) {
 
 	return $args;
 }
-//add_filter( 'bp_rest_messages_create_item_query_arguments', 'appp_filter_messages_query_args', 10, 2 )
+// add_filter( 'bp_rest_messages_create_item_query_arguments', 'appp_filter_messages_query_args', 10, 2 )

@@ -418,7 +418,7 @@ class ApppAttachment {
 		$editor = wp_get_image_editor( $file );
 
 		if ( is_wp_error( $editor ) ) {
-			// error_log(print_r($editor,true));
+
 			return $editor;
 		}
 

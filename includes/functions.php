@@ -10,10 +10,6 @@ function appp_attachments( $request ) {
 
 function appp_upload_attachments( $component, $item_id, $files ) {
 
-	// error_log(print_r($component,true));
-	// error_log(print_r($item_id,true));
-	// error_log(print_r($files,true));
-
 	if ( ! empty( $files ) ) {
 		$attachment = new ApppAttachment(
 			array(
