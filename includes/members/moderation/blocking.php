@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 
 function appp_toggle_blocking( $action, $blocker, $blocked ) {
 
-	if ( (int) $blocker === (int) $blocked ) {
+	if ( 'block' === $action && (int) $blocker === (int) $blocked ) {
 		return __( 'You can not block yourself.', 'bpre' );
 	}
 
@@ -19,7 +19,7 @@ function appp_toggle_blocking( $action, $blocker, $blocked ) {
 	switch ( $action ) {
 		case 'unblock':
 			$blocked_users = get_blocked_users( $blocker );
-			$key = array_search( (int) $blocked, $blocked_users, true );
+			$key           = array_search( (int) $blocked, $blocked_users, true );
 
 			if ( false !== $key ) {
 				unset( $blocked_users[ $key ] );
@@ -30,7 +30,7 @@ function appp_toggle_blocking( $action, $blocker, $blocked ) {
 				if ( $blocked_by ) {
 					$key = array_search( (int) $blocker, $blocked_by, true );
 
-					if ( $key !== false ) {
+					if ( false !== $key ) {
 						unset( $blocked_by[ $key ] );
 						update_user_meta( (int) $blocked, 'appp_blocked_by', $blocked_by );
 					}
@@ -87,11 +87,11 @@ function appp_toggle_blocking( $action, $blocker, $blocked ) {
  */
 function get_blocked_users( $user_id = 0 ) {
 	if ( 0 === $user_id ) {
-		return [];
+		return array();
 	}
 	$list = get_user_meta( $user_id, 'appp_blocked', true );
 	if ( empty( $list ) ) {
-		$list = [];
+		$list = array();
 	}
 	$_list = apply_filters( 'get_blocked_users', $list, $user_id );
 	return array_filter( $_list );
@@ -107,8 +107,8 @@ function get_blocked_users( $user_id = 0 ) {
  */
 function get_blocked_by_users( $user_id = 0 ) {
 	if ( 0 === $user_id ) {
-		return [];
+		return array();
 	}
 	$list = get_user_meta( $user_id, 'appp_blocked_by', true );
-	return ( $list ? (array) $list : [] );
+	return ( $list ? (array) $list : array() );
 }
