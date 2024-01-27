@@ -16,8 +16,6 @@ function appp_filter_groups_user_data( $response, $request, $group ) {
 	$user    = wp_get_current_user();
 	$user_id = $user->ID;
 
-	error_log( print_r( $user, true ) );
-
 	$avatar_full = bp_core_fetch_avatar(
 		array(
 			'item_id' => $group->id,
