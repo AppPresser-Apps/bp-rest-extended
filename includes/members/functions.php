@@ -41,7 +41,7 @@ function bpre_unfollow_user( $request ) {
 	$friend_id    = $request->get_param( 'user_id' );
 	$initiator_id = bp_loggedin_user_id();
 
-	//remove_action( 'friends_friendship_accepted', 'friends_notification_accepted_request' );
+	// remove_action( 'friends_friendship_accepted', 'friends_notification_accepted_request' );
 
 	$status = friends_check_friendship_status( $initiator_id, $friend_id );
 
@@ -102,7 +102,7 @@ function bpre_follow_email_message() {
 	// Do not create if it already exists and is not in the trash.
 	$post_exists = post_exists( '[{{{site.name}}}] New Follower' );
 
-	if ( $post_exists != 0 && get_post_status( $post_exists ) == 'publish' ) {
+	if ( $post_exists !== 0 && get_post_status( $post_exists ) === 'publish' ) {
 		return;
 	}
 
@@ -134,6 +134,5 @@ function bpre_follow_email_message() {
 			);
 		}
 	}
-
 }
 add_action( 'bp_core_install_emails', 'bpre_follow_email_message' );
